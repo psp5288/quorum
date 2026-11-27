@@ -19,6 +19,7 @@ services:
     volumes:
       - q1:/data
   n2:
+    build: .
     image: quorum:local
     hostname: n2
     command:
@@ -37,6 +38,7 @@ services:
     volumes:
       - q2:/data
   n3:
+    build: .
     image: quorum:local
     hostname: n3
     command:
