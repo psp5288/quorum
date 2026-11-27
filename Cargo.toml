@@ -1,0 +1,14 @@
+[package]
+name = "quorum"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+publish = false
+description = "Three-node Raft cluster. The log is a Forge store, fsynced before acknowledgement."
+
+[[bin]]
+name = "quorum"
+path = "src/main.rs"
+
+[dependencies]
+forge-core = { git = "https://github.com/psp5288/forge", rev = "12a028319818fd6ffe4c516bccb7ded9a84b74de" }

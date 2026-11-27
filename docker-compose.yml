@@ -1,0 +1,60 @@
+services:
+  n1:
+    build: .
+    image: quorum:local
+    hostname: n1
+    command:
+      [
+        "node",
+        "--id", "1",
+        "--data", "/data",
+        "--raft", "0.0.0.0:7001",
+        "--http", "0.0.0.0:8001",
+        "--advertise", "http://127.0.0.1:8001",
+        "--peers", "2=n2:7001,3=n3:7001",
+        "--peer-http", "2=http://127.0.0.1:8002,3=http://127.0.0.1:8003",
+      ]
+    ports:
+      - "8001:8001"
+    volumes:
+      - q1:/data
+  n2:
+    image: quorum:local
+    hostname: n2
+    command:
+      [
+        "node",
+        "--id", "2",
+        "--data", "/data",
+        "--raft", "0.0.0.0:7001",
+        "--http", "0.0.0.0:8001",
+        "--advertise", "http://127.0.0.1:8002",
+        "--peers", "1=n1:7001,3=n3:7001",
+        "--peer-http", "1=http://127.0.0.1:8001,3=http://127.0.0.1:8003",
+      ]
+    ports:
+      - "8002:8001"
+    volumes:
+      - q2:/data
+  n3:
+    image: quorum:local
+    hostname: n3
+    command:
+      [
+        "node",
+        "--id", "3",
+        "--data", "/data",
+        "--raft", "0.0.0.0:7001",
+        "--http", "0.0.0.0:8001",
+        "--advertise", "http://127.0.0.1:8003",
+        "--peers", "1=n1:7001,2=n2:7001",
+        "--peer-http", "1=http://127.0.0.1:8001,2=http://127.0.0.1:8002",
+      ]
+    ports:
+      - "8003:8001"
+    volumes:
+      - q3:/data
+volumes:
+  q1:
+  q2:
+  q3:
